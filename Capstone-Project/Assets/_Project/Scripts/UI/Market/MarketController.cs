@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MarketController : MonoBehaviour
 {
-    [SerializeField] private float playerLvl;
     [SerializeField] private GameObject MarketContent;
+    private List<GameObject> ChampionsInMarket = new List<GameObject>();
     private float marketItemsCount = 5;
 
 
@@ -19,12 +19,20 @@ public class MarketController : MonoBehaviour
     {
         SpawnItems();
     }
+    //chiamata nel pulsante aggiorna in market e alla fine del turno 
     public void SpawnItems()
     {
+        if (ChampionsInMarket != null)
+        {
+            foreach(GameObject item in ChampionsInMarket)
+            {
+                Destroy(item);
+            }
+        }
         for (int i = 0; i < marketItemsCount; i++)
         {
             float rarity = Random.Range(0f, 1f);
-            switch (playerLvl)
+            switch (PlayerInventory.Instance.playerLvl)
             {
                   case 0:
                     if(rarity < 0.8f)
@@ -53,25 +61,31 @@ public class MarketController : MonoBehaviour
         }
     }
 
+
     private void SpawnCommon()
     {
-        Instantiate(common_ChampionItemList[Random.Range(0, common_ChampionItemList.Count)],MarketContent.transform);
+       var a = Instantiate(common_ChampionItemList[Random.Range(0, common_ChampionItemList.Count)],MarketContent.transform);
+        ChampionsInMarket.Add(a);
     }
     private void SpawnNormal()
     {
-        Instantiate(normal_ChampionItemList[Random.Range(0, normal_ChampionItemList.Count)], MarketContent.transform);
+        var a = Instantiate(normal_ChampionItemList[Random.Range(0, normal_ChampionItemList.Count)], MarketContent.transform);
+        ChampionsInMarket.Add(a);
     }
     private void SpawnRare()
     {
-        Instantiate(rare_ChampionItemList[Random.Range(0, rare_ChampionItemList.Count)], MarketContent.transform);
+        var a = Instantiate(rare_ChampionItemList[Random.Range(0, rare_ChampionItemList.Count)], MarketContent.transform);
+        ChampionsInMarket.Add(a);
     }
     private void SpawnEpic()
     {
-        Instantiate(epic_ChampionItemList[Random.Range(0, epic_ChampionItemList.Count)], MarketContent.transform);
+        var a = Instantiate(epic_ChampionItemList[Random.Range(0, epic_ChampionItemList.Count)], MarketContent.transform);
+        ChampionsInMarket.Add(a);
     }
     private void SpawnLegendary()
     {
-        Instantiate(legendary_ChampionItemList[Random.Range(0, legendary_ChampionItemList.Count)], MarketContent.transform);
+        var a = Instantiate(legendary_ChampionItemList[Random.Range(0, legendary_ChampionItemList.Count)], MarketContent.transform);
+        ChampionsInMarket.Add(a);
     }
 
 }
